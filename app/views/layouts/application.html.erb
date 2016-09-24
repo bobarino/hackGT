@@ -8,6 +8,22 @@
 </head>
 <body>
 
+<%= render 'layouts/top_bar' %>
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
+<% if !user_signed_in? %>
+<div class="jumbotron">
+  <div class="col-sm-offset-3">
+    <h1>Welcome to GreekFile</h1>
+  </div>
+</div>
+<% end %>
+
 <%= yield %>
 
 </body>

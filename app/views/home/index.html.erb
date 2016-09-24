@@ -1,0 +1,5 @@
+<h1>Welcome to Change</h1>
+<% if flash[:error] %>
+  <div class="error"><%= flash[:error] %></div>
+<% end %>
+<%= link_to 'Create Charity Portfolio', portfolio_path %>
