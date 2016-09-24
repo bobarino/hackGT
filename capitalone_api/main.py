@@ -26,9 +26,9 @@ while(running):
                 }
 
     #Next, see if there are any pending payouts and execute them
-    payoutList = db.getPendingPayouts()
-    for payout in payoutList:
-	db.execute('UPDATE Payouts(paid) VALUES(%i);',
-		int(co_api.createPurchase(payout[2], payout[1], payout[3]))
+    #payoutList = db.getPendingPayouts()
+    #for payout in payoutList:
+	#db.execute('UPDATE Payouts(paid) VALUES(%i);',
+	#	int(co_api.createPurchase(payout[2], payout[1], payout[3]))
 )
-    running = False
+#    running = False
