@@ -16,10 +16,14 @@ while(running):
 	#Add any new transactions from CO servers
 	upList = co_api.getPurchases(user[0])
 	for newPurchase in upList:
+                new = False
 		for purchase in purchaseList:
-			if(purchase[6] != newPurchase['_id']):
-				#New purchase has been found, create with ext=True
-				db.tabulatePurchase(newPurchase, True)
+			if(purchase[6] == newPurchase['_id']):
+				#Not a new purchase
+                            new = True
+                if(new){
+                    db.tabulatePurchase(newPurchase, True)
+                }
 
     #Next, see if there are any pending payouts and execute them
     payoutList = db.getPendingPayouts()
