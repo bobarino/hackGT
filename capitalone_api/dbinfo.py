@@ -1,3 +1,3 @@
-password = ""
+password = "bandit"
 user = "postgres"
-name = "hackgt"
+name = "hackgt_development"

@@ -20,6 +20,4 @@ class HomeController < ApplicationController
     current_user.save!
     redirect_to root_path
   end
-  def link
-  end
 end
