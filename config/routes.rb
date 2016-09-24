@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  devise_for :users
+  root to: "home#index"
+  get 'portfolio' => 'home#portfolio'
+  get 'add_portfolio/:name' => 'home#add_portfolio', as: :add_portfolio
+  get 'finish_portfolio' => 'home#finish_portfolio'
+  get 'link' => 'home#link'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -24,6 +24,11 @@ default: &default
 development:
   <<: *default
   database: hackgt_development
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: hackgt
+  password: bandit
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,6 +63,11 @@ development:
 test:
   <<: *default
   database: hackgt_test
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: hackgt
+  password: bandit
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -82,4 +92,4 @@ production:
   <<: *default
   database: hackgt_production
   username: hackgt
-  password: <%= ENV['HACKGT_DATABASE_PASSWORD'] %>
+  password: bandit
