@@ -1,13 +1,17 @@
-<h1>Change Dashboard</h1>
+
 <% if flash[:error] %>
   <div class="error"><%= flash[:error] %></div>
 <% end %>
-<h3>You are $<%= @cur_change %> to your $5 donation!</h3>
-<div id="chartContainer"><%= @chart.render() %></div>
-<h3>You have donated a total of $<%= @total %></h3>
-
-<% if @user.portfolio %>
-  <%= link_to 'Edit Charity Portfolio', portfolio_path %>
-<% else %>
-  <%= link_to 'Create Charity Portfolio', portfolio_path %>
-<% end %>
+<% if !@user.portfolio %>
+<h1>Get Started</h1>
+<div class="jumbotron">
+  <div class="col-sm-offset-3">
+    <h1><%= link_to 'Create Charity Portfolio', portfolio_path %></h1>
+  </div>
+</div>
+ <% else %>
+ <h1>Change Dashboard</h1> <%= link_to 'Edit Charity Portfolio', portfolio_path %>
+ <h3>You are $<%= @cur_change %> to your $5 donation!</h3>
+ <div id="chartContainer"><%= @chart.render() %></div>
+ <h3>You have donated a total of $<%= @total %></h3>
+ <% end %>
