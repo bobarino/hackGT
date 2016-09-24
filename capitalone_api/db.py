@@ -24,10 +24,16 @@ def tabulatePurchase(purchase, ext):
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
 
+def getUserList():
+    db.cur.execute('SELECT * FROM Users;')
+    return db.cur.fetchall()
+
 def getPurchaseList():
     db.cur.execute('SELECT * FROM CO_Purchases;')
     return db.cur.fetchall()
 
-def getPayoutList():
+def getPendingPayouts():
     db.cur.execute('SELECT * FROM Payouts WHERE paid=FALSE;')
     return db.cur.fetchall()
+
+def 

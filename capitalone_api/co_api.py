@@ -9,7 +9,7 @@ merchantID = '57e62a1cdbd83557146123bd'
 
 r = {}
 
-def createCustomer():
+"""def createCustomer():
     address = {
                 'street_number':'792',
                 'street_name':'Techwood Dr NW',
@@ -25,12 +25,9 @@ def createCustomer():
     r = requests.post('http://api.reimaginebanking.com/customers?key='+apiKey,
                       data = json.dumps(customerData),
                       headers={'content-type':'application/json'})
-    print(r.text);
+    print(r.text);"""
 
-
-#createCustomer()
-
-def createAccount():
+"""def createAccount(user):
     accountData = {
                     'type':'Checking',
                     'nickname':'Checking',
@@ -41,11 +38,9 @@ def createAccount():
     r = requests.post('http://api.reimaginebanking.com/customers/'+customerID+'/accounts?key='+apiKey,
                       data = json.dumps(accountData),
                       headers = {'content-type':'application/json'})
-    print(r.text)
+    print(r.text)"""
 
-#createAccount()
-
-def createMerchant():
+"""def createMerchant():
     merchantData = {
                     'name':'TestCharity',
                     'category':['Charity'],
@@ -54,11 +49,9 @@ def createMerchant():
     r = requests.post('http://api.reimaginebanking.com/merchants?key='+apiKey,
                       data = json.dumps(merchantData),
                       headers = {'content-type':'application/json'})
-    print(r.text)
+    print(r.text)"""
 
-#createMerchant()
-
-def makePurchase():
+"""def makePurchase():
     purchaseAmount = 5.00
     purchaseData = {
                     'merchant_id':merchantID,
@@ -110,5 +103,3 @@ def createPurchase(account_id, merchant_id, amt):
                       data = json.dumps(purchaseData),
                       headers = {'content-type':'application/json'})
     return (r, now)
-
-#def createAccount(customer_id)
