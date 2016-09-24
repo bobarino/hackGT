@@ -2,4 +2,9 @@
 <% if flash[:error] %>
   <div class="error"><%= flash[:error] %></div>
 <% end %>
-<%= link_to 'Create Charity Portfolio', portfolio_path %>
+
+<% if @user.portfolio %>
+  <%= link_to 'Edit Charity Portfolio', portfolio_path %>
+<% else %>
+  <%= link_to 'Create Charity Portfolio', portfolio_path %>
+<% end %>

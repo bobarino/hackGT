@@ -1,1 +1,8 @@
-Get started on your portfolio
+Select what causes you would like in your donation portfolio.
+<br />
+<br />
+<% @charity_list.each do |char| %>
+  <h3><%= char %></h3>
+  <%= link_to 'Add to portfolio', add_portfolio_path(char) %>
+<% end %>
+<h4><%= link_to 'Finish Portfolio', finish_portfolio_path %></h4>
