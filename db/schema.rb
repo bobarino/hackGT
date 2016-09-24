@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160924193250) do
+ActiveRecord::Schema.define(version: 20160924204822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,15 +25,17 @@ ActiveRecord::Schema.define(version: 20160924193250) do
     t.string  "merchant_id"
     t.string  "account_id"
     t.float   "amt"
-    t.boolean "paid"
+    t.boolean "paid",        default: false
+    t.string  "purchase_id"
   end
 
   create_table "purchases", force: :cascade do |t|
     t.string  "merchant_id"
     t.string  "account_id"
     t.float   "amt"
-    t.boolean "paid"
-    t.boolean "ext"
+    t.boolean "paid",        default: false
+    t.boolean "ext",         default: false
+    t.string  "purchase_id"
   end
 
   create_table "user_charities", force: :cascade do |t|
