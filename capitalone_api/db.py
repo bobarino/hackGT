@@ -17,17 +17,21 @@ def tabulatePurchase(purchase, ext):
     purchaseColumns = (purchase['amount'],
                        purchase['payer_id'],
                        purchase['payee_id'],
-                       purchase['purchase_date'],
-                       false,#Payed Out?
-                       bool(ext))
-    db.cur.execute("""INSERT INTO CO_Purchases(amount, account_id, merchant_id, date, payed, ext)
+                       False,#Payed Out?
+                       bool(ext),
+                       purchase['_id'])
+    cur.execute("""INSERT INTO purchases(amount, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
 
-def getPurchaseList():
-    db.cur.execute('SELECT * FROM CO_Purchases;')
-    return db.cur.fetchall()
+def getUserList():
+    cur.execute('SELECT * FROM users;')
+    return cur.fetchall()
 
-def getPayoutList():
-    db.cur.execute('SELECT * FROM Payouts WHERE paid=FALSE;')
-    return db.cur.fetchall()
+def getPurchaseList():
+    cur.execute('SELECT * FROM purchases;')
+    return cur.fetchall()
+
+def getPendingPayouts():
+    cur.execute('SELECT * FROM payouts WHERE paid=FALSE;')
+    return cur.fetchall()
