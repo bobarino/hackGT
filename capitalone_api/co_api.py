@@ -9,7 +9,6 @@ merchantID = '57e62a1cdbd83557146123bd'
 
 r = {}
 
-#create customer
 def createCustomer():
     address = {
                 'street_number':'792',
@@ -75,24 +74,41 @@ def makePurchase():
                       headers = {'content-type':'application/json'})
     print(r.text)
 
-#makePurchase()
+#makePurchase()"""
 
-def getPurchase():
-    r = requests.get('http://api.reimaginebanking.com/accounts/'+accountID
+def getPurchases(account_id):
+    r = requests.get('http://api.reimaginebanking.com/accounts/'+str(account_id)
                           +'/purchases?key='+apiKey)
-    print(r.text)
+    return r
 
-def getAccount():
-    r = requests.get('http://api.reimaginebanking.com/accounts/'+accountID
+def getAccount(account_id):
+    r = requests.get('http://api.reimaginebanking.com/accounts/'+str(account_id)
                          +'?key='+apiKey)
-    print(r.text)
+    return r
 
-def getCustomer():
-    r = requests.get('http://api.reimaginebanking.com/customers/'+customerID
+def getCustomer(co_id):
+    r = requests.get('http://api.reimaginebanking.com/customers/'+str(co_id)
                          +'?key='+apiKey)
-    print(r.text)
+    return r
     
-def getMerchant():
-    r = requests.get('http://api.reimaginebanking.com/merchants/'+merchantID
+def getMerchant(merchant_id):
+    r = requests.get('http://api.reimaginebanking.com/merchants/'+str(merchant_id)
                          +'?key='+apiKey)
-    print(r.text)
+    return r
+
+def createPurchase(account_id, merchant_id, amt):
+    now = datetime.datetime.now()
+    purchaseData = {
+                    'merchant_id':merchant_id,
+                    'medium':'balance',
+                    'purchase_date':str(now),
+                    'amount':float(amt),
+                    'description':'Payout',
+                    }
+    r = requests.post('http://api.reimaginebanking.com/accounts/'+account_id
+                          +'/purchases?key='+apiKey,
+                      data = json.dumps(purchaseData),
+                      headers = {'content-type':'application/json'})
+    return (r, now)
+
+#def createAccount(customer_id)
