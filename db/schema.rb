@@ -11,14 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160924150814) do
+ActiveRecord::Schema.define(version: 20160924204822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "charities", force: :cascade do |t|
-    t.string  "name"
-    t.integer "co_merchant_id"
+    t.string "name"
+    t.string "merchant_id"
+  end
+
+  create_table "payouts", force: :cascade do |t|
+    t.string  "merchant_id"
+    t.string  "account_id"
+    t.float   "amt"
+    t.boolean "paid",        default: false
+    t.string  "purchase_id"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.string  "merchant_id"
+    t.string  "account_id"
+    t.float   "amt"
+    t.boolean "paid",        default: false
+    t.boolean "ext",         default: false
+    t.string  "purchase_id"
   end
 
   create_table "user_charities", force: :cascade do |t|
@@ -40,6 +57,7 @@ ActiveRecord::Schema.define(version: 20160924150814) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.boolean  "portfolio",              default: false
+    t.string   "account_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
