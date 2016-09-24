@@ -23,15 +23,19 @@ def tabulatePurchase(purchase, ext):
     cur.execute("""INSERT INTO purchases(amount, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
+    con.commit()
 
 def getUserList():
     cur.execute('SELECT * FROM users;')
     return cur.fetchall()
+    con.commit()
 
 def getPurchaseList():
     cur.execute('SELECT * FROM purchases;')
     return cur.fetchall()
+    con.commit()
 
 def getPendingPayouts():
     cur.execute('SELECT * FROM payouts WHERE paid=FALSE;')
     return cur.fetchall()
+    con.commit()
