@@ -6,13 +6,6 @@ import dbinfo
 con = psycopg2.connect(database=dbinfo.name, user=dbinfo.user, password=dbinfo.password)
 cur = con.cursor()
 
-def execSQL(command):
-    cur.execute(str(command))
-    result = cur.fetchall()
-    print(result)
-
-#execSQL('SELECT * FROM testTable;')
-
 def tabulatePurchase(purchase, ext):
     purchaseColumns = (purchase['amount'],
                        purchase['payer_id'],
@@ -20,7 +13,7 @@ def tabulatePurchase(purchase, ext):
                        False,#Payed Out?
                        bool(ext),
                        purchase['_id'])
-    cur.execute("""INSERT INTO purchases(amt, account_id, merchant_id, paid, ext, purchase_id)
+    cur.execute("""INSERT INTO purchases(amount, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
     con.commit()
@@ -40,11 +33,11 @@ def getPendingPayouts():
     return cur.fetchall()
     con.commit()
 
-def completePayout(purchase):
+def completePayout(purchase, pid):
     #edit payout to payed and add purchase_id
     print(purchase)
-    cur.execute("""UPDATE payouts SET paid=TRUE, purchase_id='%s';""" % str(purchase['_id']))
-    print("Payout "+str(purchase['_id'])+" completed.")
+    cur.execute("""UPDATE payouts SET paid=TRUE, purchase_id=%s WHERE id=%s;""",
+                (str(purchase['_id']), int(pid)))
 
     #Add back to purchases to prevent it being seen as an external transaction
     purchaseColumns = (purchase['amount'],
@@ -53,7 +46,8 @@ def completePayout(purchase):
                        True,#Payed Out?
                        False,
                        purchase['_id'])
-    cur.execute("""INSERT INTO purchases(amt, account_id, merchant_id, paid, ext, purchase_id)
+    cur.execute("""INSERT INTO purchases(amount, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
+    print("Payout "+str(purchase['_id'])+" completed.")
     con.commit()

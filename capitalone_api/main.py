@@ -8,45 +8,38 @@ def mainloop():
     running = True;
     print("Main Loop Running")
     while(running):
-        #co_api.updatePurchases();
-
         userList = db.getUserList()
         purchaseList = db.getPurchaseList()
         pl = db.getPurchaseList()
 
         #Check for any new purchases for every user
-
-        #iteratively find all of user's transactions, add to ext purchases if not a payout
+        print("Checking for new transactions...")
+        #iteratively find all users' transactions, add to (ext) purchases if not there
         for user in userList:
             #Add any new transactions from CO servers
             upList = co_api.getPurchases(user[14]).json()
-            print(upList)
             for newPurchase in upList:
-                    print(newPurchase['_id'])
                     new = True
                     for purchase in purchaseList:
-                        print(purchase[5])
-                        if(purchase[5] == str(newPurchase['_id'])):
+                        if(purchase[6] == str(newPurchase['_id'])):
                             #Not a new purchase
                             new = False
                     if(new):
                         db.tabulatePurchase(newPurchase, True)
                         print("New Purchase: ", newPurchase['_id'])
-
-        #Next, see if there are any pending payouts and execute them
+        #Handle Payouts
+        print("Checking for incomplete payouts...")
+        #See if there are any pending payouts and execute them
         payoutList = db.getPendingPayouts()
         for payout in payoutList:
-            #db.execute('UPDATE Payouts(paid) VALUES(%i);',
-            #       int(co_api.createPurchase(payout[2], payout[1], payout[3])))
             r = co_api.createPurchase(payout[2],
                                       payout[1],
                                       payout[3])
             if(int(r.json()['code']) == 201):
-                db.completePayout(r.json()['objectCreated'])
+                db.completePayout(r.json()['objectCreated'], payout[0])
             else:
                 print("Payout could not be completed.")
-
+        
         time.sleep(3)
-        running = False
 
 mainloop()
