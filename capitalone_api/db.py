@@ -49,6 +49,7 @@ def completePayout(purchase, pid):
     cur.execute("""INSERT INTO purchases(amt, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
-    cur.execute("""UPDATE purchases SET paid=TRUE;""")
+    cur.execute("""UPDATE purchases SET paid=TRUE WHERE account_id=%s;""",
+                (purchase['payer_id'],))
     print("Payout "+str(purchase['_id'])+" completed.")
     con.commit()
