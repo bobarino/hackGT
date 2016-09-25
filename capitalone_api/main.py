@@ -1,5 +1,7 @@
 import db
 import co_api
+import time
+
 pl = []
 def mainloop():
     ###     MAIN LOOP       ###
@@ -33,11 +35,19 @@ def mainloop():
                         print("New Purchase: ", newPurchase['_id'])
 
         #Next, see if there are any pending payouts and execute them
-        #payoutList = db.getPendingPayouts()
-        #for payout in payoutList:
+        payoutList = db.getPendingPayouts()
+        for payout in payoutList:
             #db.execute('UPDATE Payouts(paid) VALUES(%i);',
-            #       int(co_api.createPurchase(payout[2], payout[1], payout[3]))
-    #)
+            #       int(co_api.createPurchase(payout[2], payout[1], payout[3])))
+            r = co_api.createPurchase(payout[1],
+                                      payout[0],
+                                      payout[2])
+            if(int(r.json()['code']) == 201):
+                db.completePayout(r.json()['objectCreated'])
+            else:
+                print("Payout could not be completed.")
+            
+        time.sleep(3)
         running = False
 
 mainloop()
