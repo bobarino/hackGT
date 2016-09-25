@@ -102,4 +102,4 @@ def createPurchase(account_id, merchant_id, amt):
                           +'/purchases?key='+apiKey,
                       data = json.dumps(purchaseData),
                       headers = {'content-type':'application/json'})
-    return (r, now)
+    return r
