@@ -17,7 +17,8 @@ def mainloop():
         #iteratively find all of user's transactions, add to ext purchases if not a payout
         for user in userList:
             #Add any new transactions from CO servers
-            upList = co_api.getPurchases(user[3]).json()
+            print(user[14])
+            upList = co_api.getPurchases(user[14]).json()
             print(upList)
             for newPurchase in upList:
                     print(newPurchase['_id'])
