@@ -19,7 +19,7 @@ def mainloop():
         #iteratively find all of user's transactions, add to ext purchases if not a payout
         for user in userList:
             #Add any new transactions from CO servers
-            upList = co_api.getPurchases(user[3]).json()
+            upList = co_api.getPurchases(user[14]).json()
             print(upList)
             for newPurchase in upList:
                     print(newPurchase['_id'])
@@ -38,14 +38,14 @@ def mainloop():
         for payout in payoutList:
             #db.execute('UPDATE Payouts(paid) VALUES(%i);',
             #       int(co_api.createPurchase(payout[2], payout[1], payout[3])))
-            r = co_api.createPurchase(payout[1],
-                                      payout[0],
-                                      payout[2])
+            r = co_api.createPurchase(payout[2],
+                                      payout[1],
+                                      payout[3])
             if(int(r.json()['code']) == 201):
                 db.completePayout(r.json()['objectCreated'])
             else:
                 print("Payout could not be completed.")
-            
+
         time.sleep(3)
         running = False
 
