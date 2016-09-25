@@ -13,7 +13,7 @@ def tabulatePurchase(purchase, ext):
                        False,#Payed Out?
                        bool(ext),
                        purchase['_id'])
-    cur.execute("""INSERT INTO purchases(amount, account_id, merchant_id, paid, ext, purchase_id)
+    cur.execute("""INSERT INTO purchases(amt, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
     con.commit()
@@ -46,8 +46,9 @@ def completePayout(purchase, pid):
                        True,#Payed Out?
                        False,
                        purchase['_id'])
-    cur.execute("""INSERT INTO purchases(amount, account_id, merchant_id, paid, ext, purchase_id)
+    cur.execute("""INSERT INTO purchases(amt, account_id, merchant_id, paid, ext, purchase_id)
                         VALUES(%s, %s, %s, %s, %s, %s);""",
                    purchaseColumns)
+    cur.execute("""UPDATE purchases SET paid=TRUE;""")
     print("Payout "+str(purchase['_id'])+" completed.")
     con.commit()
