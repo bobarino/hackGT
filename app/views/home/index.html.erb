@@ -14,4 +14,8 @@
  <h3>You are $<%= @cur_change %> to your $5 donation!</h3>
  <div id="chartContainer"><%= @chart.render() %></div>
  <h3>You have donated a total of $<%= @total %></h3>
+<h4>You are donating to:</h4>
+   <% @charity_list.each do |x| %>
+    <%= x %><br /><br />
+  <% end %>
  <% end %>

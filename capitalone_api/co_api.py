@@ -27,7 +27,7 @@ r = {}
                       headers={'content-type':'application/json'})
     print(r.text);"""
 
-"""def createAccount(user):
+def createAccount():
     accountData = {
                     'type':'Checking',
                     'nickname':'Checking',
@@ -38,9 +38,9 @@ r = {}
     r = requests.post('http://api.reimaginebanking.com/customers/'+customerID+'/accounts?key='+apiKey,
                       data = json.dumps(accountData),
                       headers = {'content-type':'application/json'})
-    print(r.text)"""
+    print(r.text)
 
-"""def createMerchant():
+def createMerchant():
     merchantData = {
                     'name':'TestCharity',
                     'category':['Charity'],
@@ -49,7 +49,7 @@ r = {}
     r = requests.post('http://api.reimaginebanking.com/merchants?key='+apiKey,
                       data = json.dumps(merchantData),
                       headers = {'content-type':'application/json'})
-    print(r.text)"""
+    print(r.text)
 
 """def makePurchase():
     purchaseAmount = 5.00
@@ -83,7 +83,7 @@ def getCustomer(co_id):
     r = requests.get('http://api.reimaginebanking.com/customers/'+str(co_id)
                          +'?key='+apiKey)
     return r
-    
+
 def getMerchant(merchant_id):
     r = requests.get('http://api.reimaginebanking.com/merchants/'+str(merchant_id)
                          +'?key='+apiKey)
