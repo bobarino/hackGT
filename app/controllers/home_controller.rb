@@ -28,6 +28,12 @@ class HomeController < ApplicationController
     end
     @total = total_donated
 
+    port_charities = UserCharity.where(user_id: current_user.id).pluck(:charity_id)
+    @charity_list = []
+    port_charities.each do |z|
+        @charity_list << Charity.find(z).name
+    end
+
 
     @chart = Fusioncharts::Chart.new({
         width: "600",
@@ -64,8 +70,25 @@ class HomeController < ApplicationController
   end
 
   def portfolio
-    @charity_list = Charity.pluck(:name)
-  end
+      all_list = Charity.pluck(:name)
+      port_charities = UserCharity.where(user_id: current_user.id).pluck(:charity_id)
+      @charity_list = []
+      port_charities.each do |z|
+          @charity_list << Charity.find(z).name
+      end
+      @not_charity_list = []
+      all_list.each do |x|
+      flag = true
+        @charity_list.each do |y|
+          if x == y
+            flag = false
+          end
+        end
+        if flag == true
+          @not_charity_list << x
+        end
+      end
+    end
 
   def add_portfolio
     name = params[:name]
